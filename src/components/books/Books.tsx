@@ -2,16 +2,19 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import "./Books.css";
 
 import { addPost, fetchPosts, fetchTags } from "../../api/api";
+import { useState } from "react";
 function Books() {
+  const [page, setPage] = useState(1);
   const queryClient = useQueryClient();
   const {
     data: postData,
     isLoading,
     isError,
     error,
+    isPlaceholderData,
   } = useQuery({
-    queryKey: ["posts", { page: 1 }],
-    queryFn: fetchPosts,
+    queryKey: ["posts", { page }],
+    queryFn: () => fetchPosts(page),
     gcTime: 1000,
   });
 
@@ -55,7 +58,7 @@ function Books() {
 
     if (!title || !tags) return;
 
-    addBookPost({ id: postData?.items + 1, title, tags });
+    addBookPost({ id: postData?.data?.items + 1, title, tags });
 
     e.target.reset(); // reset form
   };
@@ -88,7 +91,7 @@ function Books() {
       {isLoading && <p>Loading...</p>}
       {isError && <p>{error.message}</p>}
       {postData &&
-        postData.map((post) => {
+        postData.data.map((post) => {
           return (
             <div key={post.id} className="post">
               <div> {post.title}</div>
@@ -98,6 +101,28 @@ function Books() {
             </div>
           );
         })}
+
+      {/* Pagination */}
+      <div className="pages">
+        <button
+          onClick={() => setPage((old) => Math.max(old - 1, 0))}
+          disabled={!postData?.prev}
+        >
+          Previous Page
+        </button>
+        <span>{page}</span>
+        <button
+          onClick={() => {
+            if (!isPlaceholderData && postData?.next) {
+              setPage((old) => old + 1);
+            }
+          }}
+          // Disable the Next Page button until we know a next page is available
+          disabled={isPlaceholderData || !postData?.next}
+        >
+          Next Page
+        </button>
+      </div>
     </div>
   );
 }
