@@ -1,0 +1,34 @@
+.tabs-container {
+    width: 100%;
+    display: flex;
+  }
+  
+  .tab {
+    flex: 1; /* Distribute equal width among tabs */
+    padding: 10px 20px; /* Adjust padding as needed */
+    cursor: pointer;
+    border: 1px solid #ccc; /* Border style */
+    
+    text-align: center; /* Center text horizontally */
+    margin-right: 0px; /* Spacing between tabs */
+    outline: none; /* Remove default button outline */
+  }
+  .active{
+    background-color: greenyellow;
+  }
+  .notactive{
+    background-color: #ddd; /* Background color for tabs */
+  }
+  
+  .tab:last-child {
+    margin-right: 0; /* Remove right margin from the last tab */
+  }
+  
+  .tab:hover {
+    background-color: #eee; /* Background color on hover */
+  }
+  
+  
+  
+  
+  

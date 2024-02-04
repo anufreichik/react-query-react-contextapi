@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  gap: 10px;
+}
+
+.addressBookItem {
+  display: flex;
+  padding: 10px;
+  color: #434dcf;
+  flex-direction: column;
+  gap: 10px;
+  margin: 5px;
+  border: 2px dashed gray;
+}
+
+.buttonWithBackground {
+  background-color: #3498db;
+  color: #fff;
+}
